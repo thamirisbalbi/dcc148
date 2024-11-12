@@ -62,14 +62,14 @@ public class Location
     /// <param name="info">Vetor de strings contendo os dados de deslocamento</param>
     public void AddTravelInfo(string[] info)
     {
-        int destinationID = int.Parse(info[1])-1;
-        if(destinationID < 300)
+        int destinationID = int.Parse(info[1]) - 1;
+        if (destinationID < 300)
         {
-            travelTable[destinationID] = new List<int>();
-            for(int i = 2; i < info.Length; i++)
+            travelTable[destinationID] = new List<int>(); //creates empty list in the travel table dictionary
+            for (int i = 2; i < info.Length; i++)
             {
-                int motionVerbId = int.Parse(info[i]);
-                travelTable[destinationID].Add(motionVerbId);
+                int motionVerbId = int.Parse(info[i]);  //itera sobre o array info; variavel int converte string para int de cada elemento de info
+                travelTable[destinationID].Add(motionVerbId); //adiciona os ids convertidos para o dicionario, associado ao id de destino
             }
         }
     }
@@ -82,15 +82,22 @@ public class Location
     public int FindDestination(int word)
     {
         // =================================================================
-
+        foreach (int destinationID in travelTable.Keys)
+        { //itera sobre ids de destino na lista de chaves do dicionario
+            foreach (int wordID in travelTable[destinationID])
+            { //percorre cada palavra associada ao id de destino
+                if (word == wordID)
+                {
+                    return destinationID; //caso a palavra esteja dentro do dicionario, retorna o id correspondente
+                }
+            }
+        }
+        return -1;
         // Implemente aqui a sua solução
         // Você pode usar travelTable.Keys para obter a lista de chaves do dicionário
         // No C# você tem a estrutura "foreach", cuja sintaxe é:
         //      foreach(<tipo> <variável> in <coleção>)
         // Documentação: https://learn.microsoft.com/pt-br/dotnet/api/system.collections.generic.dictionary-2?view=net-7.0
-
-        return -1;
-
         // =================================================================
     }
 }
