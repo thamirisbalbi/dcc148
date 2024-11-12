@@ -36,21 +36,35 @@ using UnityEngine.UI;
 /// ==> Display: DisplayText (Text)
 /// ==> User Input: UserInput (InputField)
 /// </summary>
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{ // classe que controla o jogador
+  //monobehaviour , indicating it's a script designed to be attached to a GameObject in a Unity project.
 
-	int playerPosition = 0;			// armazena o id do local onde o jogador se encontra
-	List<Location> locations;		// lista com todos os locais importados do arquivo
+	int playerPosition = 0;         // armazena o id do local onde o jogador se encontra
+	List<Location> locations;       // lista com todos os locais importados do arquivo
 	Dictionary<string, int> words;  // dicionário associando as palavras válidas aos seus respectivos ids
 
-	public Text display;			// objeto usado para exibir informacão de jogo na tela
-	public InputField userInput;	// objeto usado para capturar os comandos do usuário
+	public Text display;            // objeto usado para exibir informacão de jogo na tela
+	public InputField userInput;    // objeto usado para capturar os comandos do usuário
 
+	//obs: 
+
+	//Este código declara um dicionário (ou mapa) chamado `words` que associa strings (palavras) a inteiros (ids).
+	// Isso é relevante para um jogo porque permite armazenar e recuperar rapidamente informações sobre as palavras válidas no jogo.
+	//Por exemplo, em um jogo de palavras, você pode usar esse dicionário para:
+	//Verificar se uma palavra inserida pelo jogador é válida (verificando se a palavra está no dicionário)
+	//Obter o id de uma palavra para usar em outras partes do jogo (como pontuação, níveis, etc.)
+	//Armazenar informações adicionais sobre as palavras, como sua dificuldade ou categoria
+
+	O uso de um dicionário permite uma busca rápida e eficiente, o que é importante em jogos que requerem respostas rápidas.
+	
 	// Use this for initialization
-	void Start () {
+		void Start()
+		{
 		// Cria a lista de locais e carrega os dados do arquivo, usando as funcões de manipulacão de arquivos do C#
-		locations = new List<Location> ();
-		StreamReader file = File.OpenText ("Assets/Resources/cave.dat");
-		
+		locations = new List<Location>();
+		StreamReader file = File.OpenText("Assets/Resources/cave.dat");
+
 		LoadLongDescriptions(file);
 		LoadShortDescriptions(file);
 		LoadTravelTable(file);
@@ -60,15 +74,15 @@ public class PlayerController : MonoBehaviour {
 		LoadActionWords(file);
 
 		// Coloca o foco na caixa de texto
-		userInput.Select ();
-		userInput.ActivateInputField ();
+		userInput.Select();
+		userInput.ActivateInputField();
 
 		// Jogo iniciado com a descrição longa da localização inicial
 		display.text = locations[playerPosition].LongDescription;
 
-		file.Close ();
+		file.Close();
 	}
-	
+
 	/// <summary>
 	/// Carrega as descrições longas do arquivo
 	/// </summary>
@@ -89,10 +103,10 @@ public class PlayerController : MonoBehaviour {
 		string[] parts = line.Split('\t');
 		int previous = 1;
 		string description = "";
-		while (line != null && parts[0] != "-1") 
+		while (line != null && parts[0] != "-1")
 		{
 			int current = int.Parse(parts[0]);
-			if(current == previous)
+			if (current == previous)
 				description += parts[1] + " ";
 			else
 			{
@@ -124,9 +138,9 @@ public class PlayerController : MonoBehaviour {
 		Debug.Log("Reading Section " + line + "...");
 		line = file.ReadLine();
 		string[] parts = line.Split('\t');
-		while (line != null && parts[0] != "-1") 
+		while (line != null && parts[0] != "-1")
 		{
-			int locationId = int.Parse(parts[0])-1;
+			int locationId = int.Parse(parts[0]) - 1;
 			locations[locationId].ShortDescription = parts[1];
 			line = file.ReadLine();
 			parts = line.Split('\t');
@@ -150,9 +164,9 @@ public class PlayerController : MonoBehaviour {
 		Debug.Log("Reading Section " + line + "...");
 		line = file.ReadLine();
 		string[] parts = line.Split('\t');
-		while (line != null && parts[0] != "-1") 
+		while (line != null && parts[0] != "-1")
 		{
-			int locationId = int.Parse(parts[0])-1;
+			int locationId = int.Parse(parts[0]) - 1;
 			locations[locationId].AddTravelInfo(parts);
 			line = file.ReadLine();
 			parts = line.Split('\t');
@@ -173,13 +187,13 @@ public class PlayerController : MonoBehaviour {
 	/// <param name="file">Arquivo contendo os dados do jogo</param>
 	void LoadActionWords(StreamReader file)
 	{
-		
+
 		string line;
 		line = file.ReadLine(); // lê a primeira linha, que indica o número da seção
 		Debug.Log("Reading Section " + line + "...");
 		line = file.ReadLine();
 		string[] parts = line.Split('\t');
-		while (line != null && parts[0] != "-1") 
+		while (line != null && parts[0] != "-1")
 		{
 			int wordId = int.Parse(parts[0]);
 			words[parts[1]] = wordId;
@@ -188,12 +202,14 @@ public class PlayerController : MonoBehaviour {
 		}
 		Debug.Log("Finished reading section");
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.Return)) {
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Return))
+		{
 			Debug.Log("POSITION ANTES: " + playerPosition);
-			
+
 			// =================================================================
 
 			// Implemente aqui a sua solução
