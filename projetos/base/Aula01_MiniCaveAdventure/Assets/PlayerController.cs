@@ -56,11 +56,11 @@ public class PlayerController : MonoBehaviour
 	//Obter o id de uma palavra para usar em outras partes do jogo (como pontuação, níveis, etc.)
 	//Armazenar informações adicionais sobre as palavras, como sua dificuldade ou categoria
 
-	O uso de um dicionário permite uma busca rápida e eficiente, o que é importante em jogos que requerem respostas rápidas.
-	
+	//O uso de um dicionário permite uma busca rápida e eficiente, o que é importante em jogos que requerem respostas rápidas.
+
 	// Use this for initialization
-		void Start()
-		{
+	void Start()
+	{
 		// Cria a lista de locais e carrega os dados do arquivo, usando as funcões de manipulacão de arquivos do C#
 		locations = new List<Location>();
 		StreamReader file = File.OpenText("Assets/Resources/cave.dat");
