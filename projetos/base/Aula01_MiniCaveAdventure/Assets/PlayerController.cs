@@ -209,7 +209,10 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
 			Debug.Log("POSITION ANTES: " + playerPosition);
-
+			string word = userInput.text.ToUpper();
+			//leitura do comando digitado pelo jogador, a partir do objeto userInput
+			//ToUpper: deixa o texto maiusculo, nao tendo o problema de diferenciar maiusculas e minusculas
+			//ToUpper garante validacao? //como verificar se é uma palavra válida?
 			// =================================================================
 
 			// Implemente aqui a sua solução
